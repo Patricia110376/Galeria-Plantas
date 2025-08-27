@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeria de Imagens Biodiversidade do CaVG</title>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Basic&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Gentium Basic', serif;
+  background-color: #4ea841;
+}
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 2em;
+  color: #fff;
+  margin: 0;
+}
+
+/* Botão Voltar e logo */
+.back-button {
+  position: absolute;
+  top: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  border: 2px solid #fff;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1000;
+}
+.back-button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.logo {
+  position: absolute;
+  top: 10px;
+  width: 80px;
+  height: auto;
+  z-index: 1000;
+}
+
+/* Galeria de miniaturas */
+.gallery-wrapper {
+  position: relative;
+  padding: 70px 20px 20px 20px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  justify-items: center;
+}
+
+.thumb-polaroid {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 8px solid #fff;
+  border-bottom-width: 25px; /* borda inferior menor */
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.5);
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.thumb-polaroid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-weight: bold;
+  font-size: 0.75em;
+  line-height: 1.1em;
+  color: #000;
+  text-align: center;
+  padding: 3px 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  background-color: #fff;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #4ea841;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-polaroid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 10px solid #fff;
+  border-bottom-width: 40px; /* modal mantém borda maior */
+  border-radius: 4px;
+  background-color: #fff;
+  max-width: 90vw;
+  max-height: 85vh;
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.7);
+  text-align: center;
+  overflow: hidden;
+}
+
+.modal-polaroid img {
+  width: auto;
+  height: 80vh;
+  max-width: 90vw;
+  object-fit: contain;
+}
+
+.modal-caption {
+  width: 100%;
+  font-weight: bold;
+  font-size: 1em;
+  color: #000;
+  padding: 5px 0;
+  background-color: #fff;
+}
+
+/* Botões de navegação */
+.close, .prev, .next {
+  position: absolute;
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  padding: 12px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  z-index: 1000;
+}
+.close { top: 20px; right: 35px; font-size: 45px; background: rgba(0,0,0,0.5); }
+.prev { left: 20px; top: 50%; transform: translateY(-50%); }
+.next { right: 20px; top: 50%; transform: translateY(-50%); }
+
+@media (max-width: 800px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .thumb-polaroid { width: 140px; height: 140px; }
+}
+</style>
+</head>
+<body>
+
+<div class="gallery-wrapper">
+  <button class="back-button" onclick="window.location.href='https://sites.google.com/view/biodiversidade-do-cavg/p%C3%A1gina-inicial'">↩ Voltar</button>
+  <img src="https://i.postimg.cc/d0BYm8Ly/P-rtico-Bio-Ori-Red.jpg" alt="Logo Bio" class="logo">
+
+  <h1>Galeria de Imagens Biodiversidade do CaVG</h1>
+
+  <div class="gallery">
+    <!-- 1 a 12 (já estavam) -->
+    <div class="thumb-polaroid" onclick="openModal(0)">
+      <img src="https://i.postimg.cc/g0Gwj1fF/Boa.jpg" alt="Alma-de-gato">
+      <div class="thumb-caption">Alma-de-gato</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(1)">
+      <img src="https://i.postimg.cc/FKKLG2Gb/Anu-branco-1.jpg" alt="Anu-branco">
+      <div class="thumb-caption">Anu-branco</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(2)">
+      <img src="https://i.postimg.cc/dV3yFJVr/DSC08076.jpg" alt="Aparaçu-escamoso-do-sul">
+      <div class="thumb-caption">Aparaçu-escamoso-do-sul</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(3)">
+      <img src="https://i.postimg.cc/g2mcvW7Q/Boa-1-1.jpg" alt="Asa-de-telha">
+      <div class="thumb-caption">Asa-de-telha</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(4)">
+      <img src="https://i.postimg.cc/KvPyJYkJ/Img-1.jpg" alt="Beija-flor-dourado">
+      <div class="thumb-caption">Beija-flor-dourado</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(5)">
+      <img src="https://i.postimg.cc/SNpVVx9W/Boa-1.jpg" alt="Caracará ou Gavião-de-queimada">
+      <div class="thumb-caption">Caracará ou Gavião-de-queimada</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(6)">
+      <img src="https://i.postimg.cc/brsP3sCG/Espor-fito-e-gamet-fito.png" alt="Esporófito e Gametófito">
+      <div class="thumb-caption">Esporófito e Gametófito</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(7)">
+      <img src="https://i.postimg.cc/3N7yQ4jB/exemplo1.jpg" alt="Exemplo 1">
+      <div class="thumb-caption">Exemplo 1</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(8)">
+      <img src="https://i.postimg.cc/8cTcck6C/exemplo2.jpg" alt="Exemplo 2">
+      <div class="thumb-caption">Exemplo 2</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(9)">
+      <img src="https://i.postimg.cc/HWJBrXwd/exemplo3.jpg" alt="Exemplo 3">
+      <div class="thumb-caption">Exemplo 3</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(10)">
+      <img src="https://i.postimg.cc/fR9dzqgM/exemplo4.jpg" alt="Exemplo 4">
+      <div class="thumb-caption">Exemplo 4</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(11)">
+      <img src="https://i.postimg.cc/vBWNhtXd/exemplo5.jpg" alt="Exemplo 5">
+      <div class="thumb-caption">Exemplo 5</div>
+    </div>
+
+    <!-- 13 a 24 (placeholders, troque pelos seus) -->
+    <div class="thumb-polaroid" onclick="openModal(12)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 6">
+      <div class="thumb-caption">Exemplo 6</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(13)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 7">
+      <div class="thumb-caption">Exemplo 7</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(14)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 8">
+      <div class="thumb-caption">Exemplo 8</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(15)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 9">
+      <div class="thumb-caption">Exemplo 9</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(16)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 10">
+      <div class="thumb-caption">Exemplo 10</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(17)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 11">
+      <div class="thumb-caption">Exemplo 11</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(18)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 12">
+      <div class="thumb-caption">Exemplo 12</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(19)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 13">
+      <div class="thumb-caption">Exemplo 13</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(20)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 14">
+      <div class="thumb-caption">Exemplo 14</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(21)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 15">
+      <div class="thumb-caption">Exemplo 15</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(22)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 16">
+      <div class="thumb-caption">Exemplo 16</div>
+    </div>
+    <div class="thumb-polaroid" onclick="openModal(23)">
+      <img src="https://via.placeholder.com/150" alt="Exemplo 17">
+      <div class="thumb-caption">Exemplo 17</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <span class="prev" onclick="changeSlide(-1)">&#10094;</span>
+  <span class="next" onclick="changeSlide(1)">&#10095;</span>
+
+  <div class="modal-polaroid">
+    <img id="modalImage" src="">
+    <div class="modal-caption" id="caption"></div>
+  </div>
+</div>
+
+<script>
+const images = document.querySelectorAll('.thumb-polaroid img');
+const captions = Array.from(document.querySelectorAll('.thumb-caption')).map(div => div.innerText);
+let currentIndex = 0;
+
+function openModal(index) {
+  currentIndex = index;
+  document.getElementById('myModal').style.display = 'flex';
+  document.getElementById('modalImage').src = images[index].src;
+  document.getElementById('caption').innerText = captions[index];
+  document.querySelector('.logo').style.display = 'none';
+}
+
+function closeModal() {
+  document.getElementById('myModal').style.display = 'none';
+  document.querySelector('.logo').style.display = 'block';
+}
+
+function changeSlide(step) {
+  currentIndex += step;
+  if(currentIndex >= images.length) currentIndex = 0;
+  if(currentIndex < 0) currentIndex = images.length - 1;
+  document.getElementById('modalImage').src = images[currentIndex].src;
+  document.getElementById('caption').innerText = captions[currentIndex];
+}
+
+document.getElementById('myModal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+/* Alinhamento automático do botão voltar e logo */
+window.addEventListener('load', () => {
+  const firstThumb = document.querySelector('.thumb-polaroid');
+  const lastThumbs = document.querySelectorAll('.thumb-polaroid');
+  const lastThumb = lastThumbs[lastThumbs.length - 1];
+  const backBtn = document.querySelector('.back-button');
+  const logoImg = document.querySelector('.logo');
+  const firstRect = firstThumb.getBoundingClientRect();
+  const lastRect = lastThumb.getBoundingClientRect();
+
+  backBtn.style.left = `${firstRect.left}px`;
+  logoImg.style.left = `${lastRect.right - logoImg.offsetWidth}px`;
+});
+</script>
+
+</body>
+</html>
